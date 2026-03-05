@@ -2,6 +2,18 @@
   "expo": {
     "name": "social-media-automation-mobile",
     "slug": "social-media-automation-mobile",
-    "version": "1.0.0"
+    "version": "1.0.0",
+    "plugins": [
+      "expo-sqlite",
+      "expo-asset"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7f0efacb-b744-4bf4-aaec-e44c8b4ab8e2"
+      }
+    },
+    "android": {
+      "package": "com.azakkym.socialmediaautomationmobile"
+    }
   }
 }

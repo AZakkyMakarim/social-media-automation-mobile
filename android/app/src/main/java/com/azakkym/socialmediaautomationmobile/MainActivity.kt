@@ -1,4 +1,4 @@
-package com.socialmediaautomationmobile
+package com.azakkym.socialmediaautomationmobile
 
 import android.os.Build
 import android.os.Bundle

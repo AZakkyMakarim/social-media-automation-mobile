@@ -1,6 +1,7 @@
 {
-  "name": "social-media-automation-mobile",
+  "name": "lcr-tools",
   "version": "1.0.0",
+  "slug": "lcr-tools",
   "main": "index.js",
   "scripts": {
     "start": "expo start --dev-client",

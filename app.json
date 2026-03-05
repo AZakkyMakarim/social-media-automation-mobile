@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "social-media-automation-mobile",
-    "slug": "social-media-automation-mobile",
+    "name": "lcr-tools",
+    "slug": "lcr-tools",
     "version": "1.0.0",
     "plugins": [
       "expo-sqlite",
@@ -9,11 +9,12 @@
     ],
     "extra": {
       "eas": {
-        "projectId": "7f0efacb-b744-4bf4-aaec-e44c8b4ab8e2"
+        "projectId": "513f274e-8009-49ff-9803-5e3f5a7904a5"
       }
     },
     "android": {
       "package": "com.azakkym.socialmediaautomationmobile"
-    }
+    },
+    "owner": "azakkym"
   }
 }

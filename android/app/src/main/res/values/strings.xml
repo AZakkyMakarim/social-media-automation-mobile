@@ -1,3 +1,4 @@
 <resources>
-  <string name="app_name">social-media-automation-mobile</string>
+  <string name="app_name">LCR Tools</string>
+  <string name="accessibility_service_description">Layanan ini dibutuhkan untuk otomatisasi klik seperti Like, Comment, dan Repost di Instagram dan TikTok.</string>
 </resources>

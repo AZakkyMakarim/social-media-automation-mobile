@@ -1,4 +1,4 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, Alert } from 'react-native';
 
 const { AccessibilityBridge } = NativeModules;
 
@@ -28,7 +28,10 @@ export async function isServiceEnabled(): Promise<boolean> {
  */
 export async function openAccessibilitySettings(): Promise<void> {
   if (!AccessibilityBridge) {
-    console.warn('AccessibilityBridge not available (running in Expo Go?)');
+    Alert.alert(
+      'Fitur Native Tidak Tersedia',
+      'Kamu sedang menjalankan app di Expo Go.\n\nFitur Accessibility Service & deteksi app membutuhkan modul native Android. Silakan build APK terlebih dahulu menggunakan EAS Build.'
+    );
     return;
   }
   await AccessibilityBridge.openAccessibilitySettings();

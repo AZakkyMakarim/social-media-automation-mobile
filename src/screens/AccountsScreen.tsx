@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import {
   View, Text, StyleSheet, FlatList, TouchableOpacity,
-  TextInput, Alert, Modal, ActivityIndicator,
+  TextInput, Alert, Modal, ActivityIndicator, KeyboardAvoidingView, Platform,
 } from 'react-native';
 import { useFocusEffect } from '@react-navigation/native';
 import { getAccounts, addAccount, deleteAccount, Account } from '../services/AccountService';
@@ -108,7 +108,10 @@ export default function AccountsScreen() {
 
       {/* Add Account Modal */}
       <Modal visible={modalVisible} transparent animationType="slide">
-        <View style={styles.modalOverlay}>
+        <KeyboardAvoidingView 
+          style={styles.modalOverlay} 
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
           <View style={styles.modal}>
             <Text style={styles.modalTitle}>Tambah Akun</Text>
 
@@ -148,7 +151,7 @@ export default function AccountsScreen() {
               </TouchableOpacity>
             </View>
           </View>
-        </View>
+        </KeyboardAvoidingView>
       </Modal>
     </View>
   );

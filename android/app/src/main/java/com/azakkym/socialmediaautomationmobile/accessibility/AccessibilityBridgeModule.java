@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.provider.Settings;
 import android.net.Uri;
 import android.content.pm.PackageManager;
+import android.content.ActivityNotFoundException;
 
 public class AccessibilityBridgeModule extends ReactContextBaseJavaModule {
     private final ReactApplicationContext reactContext;
@@ -43,14 +44,22 @@ public class AccessibilityBridgeModule extends ReactContextBaseJavaModule {
 
     @ReactMethod
     public void checkAppInstalled(String platform, Promise promise) {
-        String packageName = platform.equals("instagram") ? "com.instagram.android" : "com.zhiliaoapp.musically";
+        String[] packages = platform.equals("instagram") 
+            ? new String[] {"com.instagram.android"} 
+            : new String[] {"com.zhiliaoapp.musically", "com.ss.android.ugc.trill", "com.ss.android.ugc.aweme"};
+            
         PackageManager pm = reactContext.getPackageManager();
-        try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
-            promise.resolve(true);
-        } catch (PackageManager.NameNotFoundException e) {
-            promise.resolve(false);
+        boolean installed = false;
+        for (String pkg : packages) {
+            try {
+                pm.getPackageInfo(pkg, PackageManager.GET_ACTIVITIES);
+                installed = true;
+                break;
+            } catch (PackageManager.NameNotFoundException e) {
+                // Not found, check next
+            }
         }
+        promise.resolve(installed);
     }
     
     @ReactMethod
@@ -60,6 +69,19 @@ public class AccessibilityBridgeModule extends ReactContextBaseJavaModule {
             promise.reject("SERVICE_DISABLED", "Accessibility Service goes offline or disabled");
             return;
         }
-        promise.resolve("Mock Execution Started in Recreated Module");
+        
+        try {
+            service.startTask(platform, action, commentText);
+            
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            reactContext.startActivity(intent);
+            
+            promise.resolve("Execution Started");
+        } catch (ActivityNotFoundException e) {
+            promise.reject("APP_NOT_FOUND", "Aplikasi tidak ditemukan untuk membuka URL ini");
+        } catch (Exception e) {
+            promise.reject("ERROR", e.getMessage());
+        }
     }
 }

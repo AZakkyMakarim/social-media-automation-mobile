@@ -44,6 +44,7 @@ public class InstagramActionHandler {
             if (!likeButton.isSelected()) {
                 likeButton.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 Log.d(TAG, "Clicked Like button");
+                takeScreenshotDelay(1000); // 1 sec after like
             }
         }
     }
@@ -77,6 +78,7 @@ public class InstagramActionHandler {
                                 List<AccessibilityNodeInfo> postBtns = latestRoot.findAccessibilityNodeInfosByViewId("com.instagram.android:id/layout_comment_thread_post_button");
                                 if(!postBtns.isEmpty()) {
                                     postBtns.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                                    takeScreenshotDelay(2000); // 2 sec after comment posted
                                 }
                             }
                         }, 1000);
@@ -104,10 +106,18 @@ public class InstagramActionHandler {
                      List<AccessibilityNodeInfo> addToStory = findNodesByText(newRoot, "Add to story"); // Example, IG UI varies heavily
                      if(!addToStory.isEmpty()) {
                          addToStory.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                         takeScreenshotDelay(2000);
                      }
                  }
             }, 2000);
         }
+    }
+
+    private void takeScreenshotDelay(int delayMs) {
+        handler.postDelayed(() -> {
+            boolean success = service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
+            Log.d(TAG, "Screenshot requested, success: " + success);
+        }, delayMs);
     }
 
     private List<AccessibilityNodeInfo> findNodesByContentDescription(AccessibilityNodeInfo root, String desc) {

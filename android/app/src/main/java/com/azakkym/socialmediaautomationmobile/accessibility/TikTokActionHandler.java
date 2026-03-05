@@ -40,6 +40,7 @@ public class TikTokActionHandler {
             if (!likeButton.isSelected()) {
                 likeButton.performAction(AccessibilityNodeInfo.ACTION_CLICK);
                 Log.d(TAG, "Clicked TikTok Like button");
+                takeScreenshotDelay(1000);
             }
         }
     }
@@ -72,6 +73,7 @@ public class TikTokActionHandler {
                                 List<AccessibilityNodeInfo> postBtns = findNodesByDesc(latestRoot, "Send");
                                 if(!postBtns.isEmpty()) {
                                     postBtns.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                                    takeScreenshotDelay(2000);
                                 }
                             }
                         }, 1000);
@@ -96,10 +98,18 @@ public class TikTokActionHandler {
                      List<AccessibilityNodeInfo> repostNodes = findNodesByText(newRoot, "Repost");
                      if(!repostNodes.isEmpty()) {
                          repostNodes.get(0).getParent().performAction(AccessibilityNodeInfo.ACTION_CLICK);
+                         takeScreenshotDelay(2000);
                      }
                  }
             }, 2000);
         }
+    }
+
+    private void takeScreenshotDelay(int delayMs) {
+        handler.postDelayed(() -> {
+            boolean success = service.performGlobalAction(AccessibilityService.GLOBAL_ACTION_TAKE_SCREENSHOT);
+            Log.d(TAG, "Screenshot requested, success: " + success);
+        }, delayMs);
     }
 
     private List<AccessibilityNodeInfo> findNodesByText(AccessibilityNodeInfo root, String text) {
